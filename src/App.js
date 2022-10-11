@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Box,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./componenets/LandingPage";
+import VideoPage from "./componenets/VideoPage";
+import ScrollToTop from "./utlis/ScrollToTop";
 
-function App() {
+
+const theme = createTheme({
+  spacing: 10,
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#202020",
+      light: "#f50057"
+    },
+    secondary: {
+      main: "#2196f3",
+    }
+    // customRibRed: {
+    //   main: red[400],
+    //   superDark: red[800],
+    //   superLight: red[100]
+    // }
+  },
+  typography: {
+    button: {
+      textTransform: "none"
+    }
+  }
+  // typography: {
+  //   myVariant: {
+  //     fontSize: "2rem"
+  //   }
+  // }
+});
+export const config = {
+  //Mock server api
+  // endpoint: 'https://937eb2d1-2b0f-42e1-af80-2c776b32bcc1.mock.pstmn.io/v1/videos'
+  endpoint: "https://xflixbackendapp.herokuapp.com/v1/videos",
+};
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+      <ScrollToTop />
+        <Box sx={{ backgroundColor: "#181818" }}>
+          <Routes>
+            <Route path="/" exact element={<LandingPage />}></Route>
+            <Route path="/video/:id" element={<VideoPage />}></Route>
+          </Routes>
+        </Box>
+      </ThemeProvider>
+    </BrowserRouter>
+
   );
 }
-
-export default App;
